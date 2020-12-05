@@ -1,8 +1,17 @@
-RDLinksFileName = "RDLinks.txt"
 dirName = 'Music'
 
-import os, urllib.request
+from urllib.request import urlopen, urlretrieve
+import os, argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('file', action='store', type=str, help="The file that has the links you want to download")
+parser.add_argument('-d', '--directory', action='store', type=str, nargs='?', help="The directory you want the files to be saved in")
+args = parser.parse_args()
+
+RDLinksFileName = args.file
+
+if args.directory:
+    dirName = args.directory
 
 # Create music directory
 dirCount = ''
@@ -31,7 +40,7 @@ for link in lines:
         nameCount += 1
         sName = "_" + str(nameCount)
     fileName = fileName.rsplit(".", 1)[0] + str(sName) + "." + fileName.rsplit(".", 1)[1]
-    urllib.request.urlretrieve(link, fileName)
+    urlretrieve(link, fileName)
     print("Downloaded: " + name)
     downloadCount += 1
 
