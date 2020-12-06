@@ -6,25 +6,19 @@ parser.add_argument('-d', '--directory', action='store', type=str, nargs='?', de
 args = parser.parse_args()
 
 RDLinksFileName = args.file
+dirName = dirBaseName = args.directory
 
-if args.directory:
-    dirName = args.directory
+# Create directory name
+dirCount = 0
 
-# Create music directory
-dirCount = ''
-
-if os.path.exists(dirName):
-    dirCount = 1
-while os.path.exists(dirName + str(dirCount)):
+while os.path.exists(dirName):
     dirCount += 1
-dirName = dirName + str(dirCount)
-os.mkdir(dirName)
+    dirName = dirBaseName + "-" + str(dirCount)
 
+# Download files
 with open(RDLinksFileName, 'r') as file:
-    lines = file.readlines()
+    links = file.readlines()
 
-os.chdir(dirName)
-
-for link in lines:
+for link in links:
     url = link.rstrip()
-    subprocess.call(["wget", url])
+    subprocess.call(["wget", url, "-P", dirName])
