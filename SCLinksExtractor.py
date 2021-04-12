@@ -3,7 +3,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('file', action='store', type=str, help="The file you want to extract the links from")
 parser.add_argument('-r', '--remove', action='store', type=str, default="", help="The part of the urls that you want to remove (e.g. playlist url)")
-parser.add_argument('-s', '--selector', action='store', type=str, default="/", help="The end of the url to select on")
+parser.add_argument('-s', '--selector', action='store', type=str, default="/", help="The end of the url to select on (default is \"/\")")
 args = parser.parse_args()
 
 SCLinksFileName = args.file
